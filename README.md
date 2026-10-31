@@ -1,12 +1,11 @@
-# Fieldnote — Anonymized Case Study
+# Sitebook — anonymized product case study
 
-A static, responsive portfolio case study for a field documentation web app.
+A responsive portfolio showcase for a field documentation app, with the anonymized application source in [`app/`](app/).
 
 ## Privacy
 
-This folder is intentionally standalone. It contains no Situmandi identifiers, production photos or videos, project records, report files, credentials, API calls, database files, or app source. The interface preview is made from fictional text and CSS illustrations. Do not copy production material into this repository.
+The public preview uses fictional entries and abstract CSS artwork. The source is anonymized. This repository contains no real field records, photos, videos, reports, database, account credentials, or Discord webhook. The live application and private archive are separate.
 
-## Publish
+## Run the app locally
 
-The page is plain HTML and CSS with no build step. It can be published with GitHub Pages from the repository root. Choose the `main` branch and `/ (root)` in the repository's Pages settings.
-
+See [`app/README.md`](app/README.md) for Node.js setup and local run instructions. The repository root is a static HTML/CSS showcase that can be served with GitHub Pages; GitHub Pages does not run the Node backend.
