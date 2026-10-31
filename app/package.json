@@ -1,0 +1,20 @@
+{
+  "name": "sitebook-field-log",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Anonymized field documentation app source",
+  "main": "server.cjs",
+  "scripts": {
+    "start": "node server.cjs",
+    "start:quiet": "node --disable-warning=ExperimentalWarning server.cjs"
+  },
+  "engines": {
+    "node": ">=22.16"
+  },
+  "dependencies": {
+    "docx": "^9.6.1",
+    "jszip": "^3.10.1",
+    "pdfkit": "^0.20.2",
+    "sharp": "^0.35.5"
+  }
+}
