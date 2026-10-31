@@ -6,6 +6,8 @@
 !/.gitignore
 !/app/
 !/app/**
+!/docs/
+!/docs/**
 
 # Private runtime state and machine-only files
 /app/data/
@@ -34,3 +36,4 @@
 /app/**/*.avi
 /app/**/*.mkv
 /app/**/*.sqlite-*
+
