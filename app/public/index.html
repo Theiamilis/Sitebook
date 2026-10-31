@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#202928">
+    <meta name="description" content="Sitebook field documentation archive" data-i18n-content="Arsip dokumentasi lapangan Sitebook">
+    <title data-i18n="Buku Lapangan | Sitebook">Field Log | Sitebook</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="i18n.js"></script>
+    <script defer src="equipment-hours.js"></script>
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <main id="auth-screen" class="auth-screen">
+      <section class="auth-intro"><p class="project-category"><span data-i18n="Buku lapangan">Field log</span></p><h1>Sitebook<span class="title-period">.</span></h1><p><span data-i18n="Foto, video, catatan, dan laporan proyek dalam satu arsip.">Project photos, videos, notes, and reports in one archive.</span></p><span class="auth-intro-footer"><span data-i18n="Dokumentasi lapangan · WIB">Field documentation · WIB</span></span></section>
+      <section class="auth-panel" aria-labelledby="auth-title">
+        <div class="language-switch auth-language" role="group" aria-label="Interface language" data-i18n-aria-label="Bahasa antarmuka"><button type="button" data-language="en" lang="en" aria-pressed="true" aria-label="English">EN</button><button type="button" data-language="id" lang="id" aria-pressed="false" aria-label="Bahasa Indonesia">ID</button></div>
+        <form id="auth-form">
+          <p class="overline" id="auth-eyebrow"><span data-i18n="Akses proyek">Project access</span></p>
+          <h2 id="auth-title"><span data-i18n="Masuk ke buku lapangan">Sign in to your field log</span></h2>
+          <p class="dialog-description" id="auth-description"><span data-i18n="Gunakan akun yang diberikan admin proyek.">Use the account provided by your project admin.</span></p>
+          <label class="field-label" for="auth-username"><span data-i18n="Username">Username</span></label><input id="auth-username" name="username" type="text" autocomplete="username" maxlength="32" required>
+          <label class="field-label" for="auth-password"><span data-i18n="Password">Password</span></label><input id="auth-password" name="password" type="password" autocomplete="current-password" maxlength="128" required>
+          <div id="auth-confirm-wrap" hidden><label class="field-label" for="auth-confirm"><span data-i18n="Ulangi password">Repeat password</span></label><input id="auth-confirm" type="password" autocomplete="new-password" maxlength="128"></div>
+          <p id="auth-feedback" class="inline-feedback" role="alert"></p>
+          <button id="auth-submit" type="submit" class="button button-primary"><span data-i18n="Masuk">Sign in</span></button>
+          <p class="field-help" id="auth-loading" role="status"><span data-i18n="Memeriksa sesi…">Checking session…</span></p>
+        </form>
+      </section>
+    </main>
+    <a class="skip-link" href="#daily-log"><span data-i18n="Ke catatan harian">Skip to daily log</span></a>
+    <div class="app-shell" hidden>
+      <aside class="sidebar" id="archive-panel" aria-label="Project archive" data-i18n-aria-label="Arsip proyek">
+        <header class="project">
+          <p class="project-category"><span data-i18n="Buku lapangan">Field log</span></p>
+          <a class="brand" href="./" id="project-title">Sitebook</a>
+          <p class="project-description"><span data-i18n="Dokumentasi harian proyek">Daily project documentation</span></p>
+        </header>
+        <div class="sidebar-section">
+          <div class="sidebar-heading"><h2 id="archive-title"><span data-i18n="Arsip dokumentasi">Documentation archive</span></h2><span id="archive-total" class="archive-total"></span></div>
+          <label class="sr-only" for="archive-month"><span data-i18n="Bulan arsip">Archive month</span></label>
+          <input id="archive-month" type="month">
+          <div id="archive-list" class="archive-list" aria-live="polite"><p class="empty-copy"><span data-i18n="Tanggal yang sudah terdokumentasi akan muncul di sini.">Documented dates will appear here.</span></p></div>
+        </div>
+        <section class="discord-panel" aria-labelledby="discord-title">
+          <div class="sidebar-heading"><h2 id="discord-title"><span data-i18n="Salinan ke Discord">Discord sync</span></h2><span class="connection-dot" id="discord-dot" aria-hidden="true"></span></div>
+          <p id="discord-summary"><span data-i18n="Hubungkan forum untuk menyalin dokumentasi secara otomatis.">Connect a forum to copy documentation automatically.</span></p>
+          <button class="sidebar-button" id="retry-sync" type="button" hidden><span data-i18n="Coba kirim lagi">Retry sync</span></button>
+          <button class="sidebar-button" id="open-discord-settings" data-admin type="button"><span data-i18n="Atur koneksi Discord">Connect Discord</span> <span aria-hidden="true">↗</span></button>
+        </section>
+        <div class="sidebar-footer"><span class="local-indicator" aria-hidden="true"></span><span id="connection-label"><span data-i18n="Menghubungkan ke arsip…">Connecting to archive…</span></span></div>
+      </aside>
+      <div class="main-shell">
+        <header class="topbar">
+          <span class="breadcrumb"><span class="breadcrumb-project" id="project-short-title">Sitebook</span><span class="breadcrumb-divider" aria-hidden="true">/</span><span class="breadcrumb-current"><span data-i18n="Dokumentasi">Documentation</span></span></span>
+          <div class="language-switch topbar-language" role="group" aria-label="Interface language" data-i18n-aria-label="Bahasa antarmuka"><button type="button" data-language="en" lang="en" aria-pressed="true" aria-label="English">EN</button><button type="button" data-language="id" lang="id" aria-pressed="false" aria-label="Bahasa Indonesia">ID</button></div>
+          <div class="topbar-actions"><a class="mobile-archive" href="#archive-panel"><span data-i18n="Arsip">Archive</span></a><button class="button button-quiet" id="open-settings" data-admin type="button" aria-label="Project settings" data-i18n-aria-label="Pengaturan proyek"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 17h16M8 4v6m8 4v6"/></svg><span><span data-i18n="Pengaturan">Settings</span></span></button><button id="open-account" class="button button-outline" type="button"><span data-i18n="Akun">Account</span></button></div>
+        </header>
+        <main id="daily-log" class="workspace">
+          <div class="page-heading">
+            <div><p class="overline"><span data-i18n="Arsip media proyek">Project media archive</span></p><h1><span data-i18n="Catatan lapangan">Field log</span><span class="title-period">.</span></h1><p class="page-description"><span data-i18n="Simpan yang terlihat. Catat yang perlu diingat.">Keep the photos. Record the details.</span></p></div>
+            <button class="button button-outline report-button" id="open-report" type="button"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6v18h12V7l-4-4Zm0 0v5h5M9 12h6m-6 4h6"/></svg><span data-i18n="Laporan Word">Word report</span></button>
+          </div>
+          <div class="setup-notice" id="setup-notice" hidden><div><strong><span data-i18n="Mulai dari tanggal pertama proyek.">Start with the first project date.</span></strong><p><span data-i18n="Atur awal Week 1 sebelum menyimpan dokumentasi.">Set the Week 1 start date before saving documentation.</span></p></div><button class="button button-ink" id="configure-first" type="button"><span data-i18n="Atur tanggal awal">Set start date</span></button></div>
+          <section class="date-panel" aria-label="Documentation date" data-i18n-aria-label="Tanggal dokumentasi">
+            <div class="date-display"><span class="date-number" id="date-number">--</span><div class="date-text"><span id="date-month"><span data-i18n="Memuat tanggal">Loading date</span></span><span id="date-weekday"><span data-i18n="Waktu Indonesia Barat">Western Indonesia Time</span></span></div></div>
+            <div class="date-picker"><button class="icon-button" id="previous-day" type="button" aria-label="Previous date" data-i18n-aria-label="Tanggal sebelumnya"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></button><label class="sr-only" for="entry-date"><span data-i18n="Pilih tanggal kegiatan">Choose activity date</span></label><input id="entry-date" type="date" aria-describedby="week-label"><button class="icon-button" id="next-day" type="button" aria-label="Next date" data-i18n-aria-label="Tanggal berikutnya"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m10 6 6 6-6 6"/></svg></button></div>
+            <p class="week-stamp" id="week-label"><span data-i18n="Tanggal awal belum diatur">Start date not set</span></p>
+          </section>
+          <section class="equipment-section" aria-labelledby="equipment-title">
+            <div class="note-heading"><div><h2 id="equipment-title"><span data-i18n="Jadwal alat berat">Heavy equipment</span></h2><p><span data-i18n="Ketuk jam saat alat bekerja. Jam OFF bisa dicatat tepat per menit.">Tap the hours the machine worked. Record downtime to the minute below.</span></p></div></div>
+            <div class="equipment-shifts" aria-label="Jam kerja normal" data-i18n-aria-label="Jam kerja normal"><span>08:00-12:00</span><span>13:00-17:00</span></div>
+            <div id="equipment-list" class="equipment-list"></div>
+            <div class="equipment-actions"><span id="equipment-status" role="status"></span><div><button class="button button-outline" id="add-equipment-downtime" type="button"><span data-i18n="Tambah alat">Add equipment</span></button><button class="button button-ink" id="save-equipment-downtime" type="button" disabled><span data-i18n="Simpan jam alat">Save hours</span></button></div></div>
+          </section>
+          <section class="photo-section" aria-labelledby="photos-title">
+            <div class="content-head"><div class="section-title"><h2 id="photos-title"><span data-i18n="Dokumentasi foto">Photo documentation</span></h2><span id="photo-total" class="photo-total">0</span></div><div class="section-tools"><span class="sync-state" id="sync-state" hidden aria-live="polite"></span><button id="download-day-photos" class="button button-quiet" type="button" hidden data-i18n="Unduh foto tanggal ini">Download this day's photos</button><button id="download-day-dated-photos" class="button button-quiet" type="button" hidden data-i18n="Unduh salinan bertanggal">Download dated copies</button><button id="delete-day" class="button button-danger-quiet" type="button" hidden><span data-i18n="Hapus foto tanggal ini">Delete this day's photos</span></button><button id="open-trash" class="button button-quiet" data-admin type="button"><span data-i18n="Sampah">Trash</span></button></div></div>
+            <p id="photo-count" class="section-description"><span data-i18n="Pilih tanggal untuk melihat dokumentasi.">Choose a date to view documentation.</span></p>
+            <div class="upload-area" id="upload-area">
+              <input id="photo-input" class="sr-only" type="file" accept="image/*" multiple aria-label="Choose field photos" data-i18n-aria-label="Pilih foto lapangan" tabindex="-1">
+              <div class="upload-copy"><svg class="upload-icon" viewBox="0 0 40 40" aria-hidden="true"><path d="M5 12h8l3-5h8l3 5h8v21H5V12Z"/><circle cx="20" cy="22" r="7"/><path d="M29 17h2"/></svg><div><strong id="upload-title"><span data-i18n="Dokumentasikan hari ini">Document this day</span></strong><p id="upload-help"><span data-i18n="Tarik foto ke sini, atau pilih dari kamera dan galeri.">Drop photos here, or choose from your camera and gallery.</span></p></div></div>
+              <button class="button button-primary" id="choose-photos" type="button"><span aria-hidden="true">+</span> <span data-i18n="Tambah foto">Add photos</span></button>
+              <div class="upload-progress" id="upload-progress" role="status"></div>
+            </div>
+            <div class="photo-grid" id="photo-grid" aria-busy="false"></div>
+          </section>
+          <section class="video-section" aria-labelledby="videos-title">
+            <div class="content-head"><div class="section-title"><h2 id="videos-title"><span data-i18n="Dokumentasi video">Video documentation</span></h2><span id="video-total" class="photo-total">0</span></div></div>
+            <p class="section-description" data-i18n="Video disimpan terpisah dari foto dan tidak dikirim ke Discord.">Videos stay separate from photos and are not sent to Discord.</p>
+            <div class="upload-area video-upload-area" id="video-upload-area">
+              <input id="video-input" class="sr-only" type="file" accept="video/mp4,video/quicktime,video/3gpp,video/webm,.mp4,.m4v,.mov,.3gp,.webm" multiple aria-label="Choose field videos" data-i18n-aria-label="Pilih video lapangan" tabindex="-1">
+              <div class="upload-copy"><svg class="upload-icon video-upload-icon" viewBox="0 0 40 40" aria-hidden="true"><rect x="5" y="9" width="21" height="22" rx="2"/><path d="m26 16 9-5v18l-9-5z"/></svg><div><strong data-i18n="Tambah dokumentasi video">Add a video record</strong><p data-i18n="MP4, MOV, 3GP, atau WebM · Maksimal 1 GB per video.">MP4, MOV, 3GP, or WebM · Up to 1 GB per video.</p></div></div>
+              <button class="button button-outline" id="choose-videos" type="button"><span aria-hidden="true">+</span> <span data-i18n="Tambah video">Add videos</span></button>
+              <div class="upload-progress" id="video-upload-progress" role="status"></div>
+            </div>
+            <div class="video-grid" id="video-grid" aria-busy="false"></div>
+          </section>
+          <section class="note-section" aria-labelledby="note-title">
+            <div class="note-heading"><div><h2 id="note-title"><span data-i18n="Ringkasan hari ini">Daily summary</span> <span class="optional"><span data-i18n="Opsional">Optional</span></span></h2><p><span data-i18n="Ringkasan kegiatan untuk tanggal ini.">Summary for this date.</span></p></div><span class="note-counter" id="note-counter">0 / 1.800</span></div>
+            <label class="sr-only" for="day-note"><span data-i18n="Ringkasan hari ini">Daily summary</span></label>
+            <textarea id="day-note" rows="4" maxlength="1800" placeholder="For example: equipment arrived…" data-i18n-placeholder="Contoh: alat turun…"></textarea>
+            <div class="note-actions"><span id="note-status" role="status"><span data-i18n="Tulis ringkasan untuk tanggal ini. Foto bisa ditambahkan nanti.">Write a summary for this date. Photos can be added later.</span></span><button class="button button-ink" id="save-note" type="button" disabled><span data-i18n="Simpan ringkasan">Save summary</span></button></div>
+          </section>
+          <footer class="app-footer"><span><span data-i18n="Foto dan video tersimpan di arsip lokal.">Photos and videos are stored in the local archive.</span></span><span>WIB · Asia/Jakarta</span></footer>
+        </main>
+      </div>
+    </div>
+    <dialog id="settings-dialog" class="dialog" aria-labelledby="settings-title">
+      <form id="settings-form" method="dialog">
+        <div class="dialog-head"><div><p class="overline"><span data-i18n="Konfigurasi">Configuration</span></p><h2 id="settings-title"><span data-i18n="Pengaturan proyek">Project settings</span></h2></div><button class="icon-button" type="button" data-close-dialog aria-label="Close settings" data-i18n-aria-label="Tutup pengaturan">×</button></div>
+        <section class="settings-section">
+          <label class="field-label" for="project-name"><span data-i18n="Nama proyek">Project name</span></label><input id="project-name" name="projectName" type="text" maxlength="80" value="Sitebook" required>
+          <label class="field-label" for="week-start"><span data-i18n="Tanggal awal Week 1">Week 1 start date</span></label><input id="week-start" name="weekStartDate" type="date" aria-describedby="week-start-help">
+          <p class="field-help" id="week-start-help"><span data-i18n="Week dihitung per tujuh hari kalender. Tanggal terkunci setelah dokumentasi pertama tersimpan.">Each week covers seven calendar days. The start date locks after the first entry is saved.</span></p>
+        </section>
+        <section class="settings-section">
+          <div class="dialog-section-title"><h3><span data-i18n="Koneksi Discord">Discord connection</span></h3><span id="webhook-status" class="status-label"><span data-i18n="Belum terhubung">Not connected</span></span></div>
+          <label class="field-label" for="webhook-url"><span data-i18n="Webhook forum">Forum webhook</span></label><input id="webhook-url" name="webhookUrl" type="password" autocomplete="off" placeholder="Paste the forum webhook URL" data-i18n-placeholder="Tempel URL webhook forum">
+          <p class="field-help"><span data-i18n="URL tersimpan ditampilkan hanya untuk admin. Jaga URL ini tetap privat.">Saved URL is shown to admins only. Keep it private.</span></p>
+          <div class="connection-actions"><button class="button button-outline" id="test-webhook" type="button"><span data-i18n="Tes koneksi">Test connection</span></button><button class="button button-outline" id="copy-webhook" type="button" hidden><span data-i18n="Salin URL">Copy URL</span></button><button class="button button-quiet" id="clear-webhook" type="button"><span data-i18n="Putuskan koneksi">Disconnect</span></button></div>
+          <p class="inline-feedback" id="settings-feedback" role="status"></p>
+        </section>
+        <section class="settings-section">
+          <div class="backup-row"><div><h3><span data-i18n="Cadangan arsip">Archive backup</span></h3><p class="field-help"><span data-i18n="Database, foto, dan video disimpan dalam folder terpisah di ZIP.">Database, photos, and videos are stored in separate folders in the ZIP.</span></p></div><button class="button button-outline" id="download-backup" type="button"><span data-i18n="Unduh ZIP">Download ZIP</span></button></div>
+          <details class="restore-details"><summary><span data-i18n="Pulihkan dari cadangan">Restore from backup</span></summary><label class="field-label" for="restore-input"><span data-i18n="Pilih ZIP cadangan">Choose backup ZIP</span></label><input id="restore-input" type="file" accept=".zip,application/zip"><p class="field-help"><span data-i18n="Arsip saat ini akan diganti. Salinan pengaman dibuat sebelum pemulihan.">This replaces the current archive. A recovery copy is made before restoring.</span></p></details>
+        </section>
+        <div class="dialog-actions"><button class="button button-outline" type="button" data-close-dialog><span data-i18n="Batal">Cancel</span></button><button class="button button-primary" id="save-settings" type="submit"><span data-i18n="Simpan pengaturan">Save settings</span></button></div>
+      </form>
+    </dialog>
+    <dialog id="report-dialog" class="dialog dialog-small" aria-labelledby="report-title">
+      <form id="report-form" method="dialog">
+        <div class="dialog-head"><div><p class="overline"><span data-i18n="Ekspor dokumentasi">Export documentation</span></p><h2 id="report-title"><span data-i18n="Laporan Word">Word report</span></h2></div><button class="icon-button" type="button" data-close-dialog aria-label="Close report" data-i18n-aria-label="Tutup laporan">×</button></div>
+        <p class="dialog-description"><span data-i18n="Foto, catatan, dan keterangan disusun ke dokumen Word yang bisa diedit. Laporan jam alat tersedia dalam format Excel dan PDF.">Photos, notes, and captions are arranged in an editable Word document. Equipment-hour reports are available in Excel and PDF.</span></p>
+        <label class="field-label" for="report-mode"><span data-i18n="Periode laporan">Report period</span></label><select id="report-mode"><option value="week" data-i18n="Satu Week">One week</option><option value="range" data-i18n="Rentang tanggal">Date range</option></select>
+        <div id="report-week-fields"><label class="field-label" for="report-week"><span data-i18n="Pilih Week">Choose week</span></label><select id="report-week"></select></div>
+        <div id="report-range-fields" class="date-range" hidden><div><label class="field-label" for="report-from"><span data-i18n="Dari tanggal">From date</span></label><input id="report-from" type="date"></div><div><label class="field-label" for="report-to"><span data-i18n="Sampai tanggal">To date</span></label><input id="report-to" type="date"></div></div>
+        <p class="inline-feedback" id="report-feedback" role="status"></p>
+        <div class="dialog-actions report-actions"><div class="report-download-grid"><button class="button button-outline" id="download-period-photos" type="button" data-i18n="Unduh foto Week (ZIP)">Download Week photos (ZIP)</button><button class="button button-outline" id="download-period-dated-photos" type="button" data-i18n="Unduh salinan bertanggal (ZIP)">Download dated copies (ZIP)</button><button class="button button-outline" id="download-equipment-report" type="button"><span data-i18n="Unduh jam alat (Excel)">Download equipment hours (Excel)</span></button><button class="button button-outline" id="download-equipment-pdf" type="button"><span data-i18n="Unduh jam alat (PDF)">Download equipment hours (PDF)</span></button></div><div class="report-primary-actions"><button class="button button-outline" type="button" data-close-dialog><span data-i18n="Batal">Cancel</span></button><button class="button button-primary" id="download-report" type="submit"><span data-i18n="Unduh Word">Download Word</span></button></div></div>
+      </form>
+    </dialog>
+    <dialog id="date-stamp-dialog" class="dialog dialog-small dialog-stamp" aria-labelledby="date-stamp-title">
+      <form id="date-stamp-form">
+        <div class="dialog-head"><div><p class="overline"><span data-i18n="Salinan foto">Photo copy</span></p><h2 id="date-stamp-title"><span data-i18n="Buat salinan bertanggal">Create a dated copy</span></h2></div><button class="icon-button" type="button" data-close-dialog aria-label="Close" data-i18n-aria-label="Tutup">×</button></div>
+        <p class="dialog-description" data-i18n="Pilih tanggal yang akan dicetak pada salinan foto. Berkas asli tidak berubah.">Choose the date to print on the photo copy. The original file stays unchanged.</p>
+        <p id="date-stamp-photo" class="field-help"></p>
+        <div class="stamp-workspace">
+          <div class="stamp-settings">
+            <label class="field-label" for="date-stamp-date"><span data-i18n="Tanggal pada foto">Date on photo</span></label>
+            <input id="date-stamp-date" type="date" required>
+            <div class="stamp-controls">
+              <div class="stamp-control"><label for="stamp-x"><span data-i18n="Posisi horizontal">Horizontal position</span><output id="stamp-x-value" for="stamp-x">78%</output></label><input id="stamp-x" type="range" min="0" max="100" step="0.1"></div>
+              <div class="stamp-control"><label for="stamp-y"><span data-i18n="Posisi vertikal">Vertical position</span><output id="stamp-y-value" for="stamp-y">82%</output></label><input id="stamp-y" type="range" min="0" max="100" step="0.1"></div>
+              <div class="stamp-control"><label for="stamp-size"><span data-i18n="Ukuran cap">Stamp size</span><output id="stamp-size-value" for="stamp-size">4%</output></label><input id="stamp-size" type="range" min="1.5" max="10" step="0.1"></div>
+              <div class="stamp-control"><label for="stamp-opacity"><span data-i18n="Opasitas teks">Text opacity</span><output id="stamp-opacity-value" for="stamp-opacity">100%</output></label><input id="stamp-opacity" type="range" min="0" max="100" step="1" value="100"></div>
+            </div>
+            <div class="stamp-color-control">
+              <label class="stamp-color-label" for="stamp-color"><span data-i18n="Warna teks">Text color</span><output id="stamp-color-value" for="stamp-color">#FFFFFF</output></label>
+              <div class="stamp-color-actions"><input id="stamp-color" class="stamp-color-swatch" type="color" value="#ffffff"><button id="stamp-pick-color" class="button button-outline" type="button" aria-pressed="false"><span data-i18n="Ambil warna dari foto">Pick from photo</span></button></div>
+              <p id="stamp-color-help" class="field-help stamp-color-help" aria-live="polite" data-i18n="Pilih warna di atas atau aktifkan pipet untuk menggeser stamp sambil mencuplik warna.">Choose a color above, or turn on the picker to drag the stamp and sample colors as you move.</p>
+            </div>
+            <div class="stamp-pixel-grid">
+              <label class="stamp-pixel-field"><span data-i18n="Titik tengah X (piksel)">Center X (pixels)</span><span class="stamp-pixel-input"><input id="stamp-x-px" type="number" min="0" step="1" inputmode="numeric" aria-describedby="stamp-source-size"><span>px</span></span></label>
+              <label class="stamp-pixel-field"><span data-i18n="Titik tengah Y (piksel)">Center Y (pixels)</span><span class="stamp-pixel-input"><input id="stamp-y-px" type="number" min="0" step="1" inputmode="numeric" aria-describedby="stamp-source-size"><span>px</span></span></label>
+            </div>
+            <p id="stamp-source-size" class="field-help stamp-source-size" aria-live="polite"></p>
+          </div>
+          <div class="stamp-preview-column">
+            <div class="stamp-preview-tools"><label for="stamp-zoom"><span data-i18n="Skala pratinjau">Preview scale</span><output id="stamp-zoom-value" for="stamp-zoom">100%</output></label><input id="stamp-zoom" type="range" min="100" max="300" step="10" value="100"></div>
+            <div id="stamp-preview" class="stamp-preview" role="group" aria-label="Pratinjau posisi cap tanggal" data-i18n-aria-label="Pratinjau posisi cap tanggal"><div id="stamp-preview-viewport" class="stamp-preview-viewport"><div id="stamp-preview-frame" class="stamp-preview-frame"><img id="stamp-preview-image" alt=""><img id="stamp-preview-overlay" class="stamp-preview-overlay" alt="" aria-hidden="true"><span id="stamp-preview-label" class="stamp-preview-label" aria-hidden="true"></span></div></div></div>
+            <p class="field-help" data-i18n="Geser tanggal atau ketuk foto untuk memindahkannya. Perbesar foto untuk melihat detail; posisi X dan Y memakai piksel foto asli.">Drag the date or tap the photo to move it. Zoom in for detail; X and Y use the original photo's pixels.</p>
+          </div>
+        </div>
+        <p id="date-stamp-feedback" class="inline-feedback" role="alert"></p>
+        <div class="dialog-actions"><button class="button button-outline" type="button" data-close-dialog><span data-i18n="Batal">Cancel</span></button><button id="download-dated-photo" class="button button-primary" type="submit"><span data-i18n="Unduh salinan foto">Download copy</span></button></div>
+      </form>
+    </dialog>
+    <dialog id="confirm-dialog" class="dialog dialog-small" aria-labelledby="confirm-title">
+      <form method="dialog">
+        <div class="dialog-head"><div><p class="overline"><span data-i18n="Konfirmasi">Confirmation</span></p><h2 id="confirm-title"><span data-i18n="Lanjutkan perubahan?">Continue with this change?</span></h2></div><button class="icon-button" type="button" data-close-dialog aria-label="Close" data-i18n-aria-label="Tutup">×</button></div>
+        <p id="confirm-message" class="dialog-description"></p>
+        <div class="dialog-actions"><button class="button button-outline" value="cancel"><span data-i18n="Batal">Cancel</span></button><button class="button button-primary" id="confirm-action" value="confirm"><span data-i18n="Sudah diperiksa, kirim">Checked, send again</span></button></div>
+      </form>
+    </dialog>
+    <dialog id="account-dialog" class="dialog dialog-small" aria-labelledby="account-title">
+      <div class="dialog-head"><div><p class="overline"><span data-i18n="Akses proyek">Project access</span></p><h2 id="account-title"><span data-i18n="Akun saya">My account</span></h2></div><button class="icon-button" type="button" data-close-dialog aria-label="Close account" data-i18n-aria-label="Tutup akun">×</button></div>
+      <p id="account-identity" class="account-identity"></p><p id="account-permissions" class="dialog-description"></p>
+      <button id="open-users" data-admin class="button button-outline" type="button"><span data-i18n="Kelola akun teman">Manage member accounts</span></button>
+      <form id="change-password-form" class="settings-section">
+        <h3><span data-i18n="Ganti password">Change password</span></h3>
+        <label class="field-label" for="current-password"><span data-i18n="Password saat ini">Current password</span></label><input id="current-password" type="password" autocomplete="current-password" required>
+        <label class="field-label" for="new-password"><span data-i18n="Password baru">New password</span></label><input id="new-password" type="password" autocomplete="new-password" minlength="6" maxlength="128" required>
+        <p class="field-help"><span data-i18n="Minimal 6 karakter. Semua sesi akun ini akan keluar setelah password diganti.">At least 6 characters. Changing the password signs out all sessions for this account.</span></p><p id="password-feedback" class="inline-feedback" role="alert"></p>
+        <button id="change-password" class="button button-ink" type="submit"><span data-i18n="Ganti password">Change password</span></button>
+      </form>
+      <div class="dialog-actions"><button id="logout" class="button button-outline" type="button"><span data-i18n="Keluar dari akun">Sign out</span></button></div>
+    </dialog>
+    <dialog id="users-dialog" class="dialog" aria-labelledby="users-title">
+      <div class="dialog-head"><div><p class="overline"><span data-i18n="Admin proyek">Project admin</span></p><h2 id="users-title"><span data-i18n="Akun teman">Member accounts</span></h2></div><button class="icon-button" type="button" data-close-dialog aria-label="Close account list" data-i18n-aria-label="Tutup daftar akun">×</button></div>
+      <p class="dialog-description"><span data-i18n="Anggota bisa lihat, unggah, edit dokumentasi, dan unduh laporan. Pengaturan, cadangan, dan hapus data hanya untuk admin.">Members can view, upload, edit documentation, and download reports. Only the admin can manage settings, backups, and deletion.</span></p>
+      <div id="users-list" class="users-list" aria-live="polite"></div>
+      <form id="create-user-form" class="settings-section">
+        <h3><span data-i18n="Tambah anggota">Add member</span></h3>
+        <label class="field-label" for="member-username"><span data-i18n="Username anggota">Member username</span></label><input id="member-username" type="text" autocomplete="off" minlength="3" maxlength="32" required>
+        <label class="field-label" for="member-password"><span data-i18n="Password awal">Initial password</span></label><input id="member-password" type="password" autocomplete="new-password" minlength="6" maxlength="128" required>
+        <p class="field-help"><span data-i18n="Berikan akun ini ke teman. Mereka bisa mengganti password sendiri setelah masuk.">Share this account with your teammate. They can change their password after signing in.</span></p><p id="users-feedback" class="inline-feedback" role="alert"></p><button id="create-user" class="button button-primary" type="submit"><span data-i18n="Buat akun anggota">Create member account</span></button>
+      </form>
+    </dialog>
+    <dialog id="password-action-dialog" class="dialog dialog-small" aria-labelledby="password-action-title">
+      <form id="password-action-form">
+        <div class="dialog-head"><div><p class="overline"><span data-i18n="Konfirmasi admin">Admin confirmation</span></p><h2 id="password-action-title"><span data-i18n="Hapus dokumentasi?">Delete documentation?</span></h2></div><button class="icon-button" type="button" data-close-dialog aria-label="Cancel action" data-i18n-aria-label="Batalkan tindakan">×</button></div>
+        <p id="password-action-description" class="dialog-description"></p>
+        <div id="action-new-password-wrap" hidden><label class="field-label" for="action-new-password"><span data-i18n="Password baru anggota">New member password</span></label><input id="action-new-password" type="password" autocomplete="new-password" minlength="6" maxlength="128"></div>
+        <label class="field-label" for="action-password"><span data-i18n="Password admin">Admin password</span></label><input id="action-password" type="password" autocomplete="current-password" required maxlength="128">
+        <p id="action-feedback" class="inline-feedback" role="alert"></p>
+        <div class="dialog-actions"><button class="button button-outline" type="button" data-close-dialog><span data-i18n="Batal">Cancel</span></button><button id="password-action-submit" class="button button-danger" type="submit"><span data-i18n="Konfirmasi hapus">Confirm deletion</span></button></div>
+      </form>
+    </dialog>
+    <dialog id="trash-dialog" class="dialog" aria-labelledby="trash-title">
+      <div class="dialog-head"><div><p class="overline"><span data-i18n="Admin proyek">Project admin</span></p><h2 id="trash-title"><span data-i18n="Sampah dokumentasi">Documentation trash</span></h2></div><button class="icon-button" type="button" data-close-dialog aria-label="Close trash" data-i18n-aria-label="Tutup sampah">×</button></div>
+      <p class="dialog-description"><span data-i18n="Foto di sini tidak tampil di arsip atau laporan. Pulihkan untuk mengembalikannya ke tanggal semula.">These photos are hidden from the archive and reports. Restore them to return them to their original date.</span></p><p class="field-help"><span data-i18n="Saat tersinkron, foto di Discord dibersihkan. Thread harian tetap tersedia untuk dipakai kembali.">Once synced, photos are removed from Discord. Daily threads remain available for reuse.</span></p>
+      <div id="trash-list" class="users-list" aria-live="polite"></div>
+    </dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
+
