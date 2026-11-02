@@ -63,6 +63,8 @@
     "+ Tambah video": "+ Add videos",
     "Belum ada video untuk tanggal ini.": "No videos for this date yet.",
     "Video dokumentasi {index}: {name}": "Documentation video {index}: {name}",
+    "Berkas video tidak ada di arsip. Unggah ulang berkas aslinya, lalu hapus entri ini.": "Video file is missing from the archive. Upload the original file again, then remove this entry.",
+    "Browser tidak bisa memutar format video ini. Ekspor sebagai MP4 H.264, lalu unggah ulang.": "This browser cannot play the video format. Export it as H.264 MP4, then upload it again.",
     "Hapus video {name}": "Remove video {name}",
     "Video tidak masuk ke bagian foto. Unggah melalui bagian dokumentasi video.": "Videos are separate from photos. Upload them in the video documentation section.",
     "Mengunggah video {index} dari {count}: {name}": "Uploading video {index} of {count}: {name}",
