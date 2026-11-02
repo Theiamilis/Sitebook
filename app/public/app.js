@@ -1004,11 +1004,24 @@ function renderVideoLog(videos) {
     const card = document.createElement("article");
     card.className = "video-card";
     const player = document.createElement("video");
-    player.src = item.streamUrl;
     player.controls = true;
     player.preload = "metadata";
     player.playsInline = true;
     player.setAttribute("aria-label", t("Video dokumentasi {index}: {name}", { index: index + 1, name: item.originalName }));
+    const playbackError = document.createElement("p");
+    playbackError.className = "video-playback-error";
+    playbackError.hidden = true;
+    player.addEventListener("error", () => {
+      playbackError.hidden = false;
+      playbackError.textContent = t("Browser tidak bisa memutar format video ini. Ekspor sebagai MP4 H.264, lalu unggah ulang.");
+    });
+    if (item.available === false) {
+      player.hidden = true;
+      playbackError.hidden = false;
+      playbackError.textContent = t("Berkas video tidak ada di arsip. Unggah ulang berkas aslinya, lalu hapus entri ini.");
+    } else {
+      player.src = item.streamUrl;
+    }
     const details = document.createElement("div");
     details.className = "video-details";
     const filename = document.createElement("p");
@@ -1026,7 +1039,7 @@ function renderVideoLog(videos) {
       remove.addEventListener("click", () => requestDeleteVideo(item));
       details.append(remove);
     }
-    card.append(player, details);
+    card.append(player, playbackError, details);
     elements.videoGrid.append(card);
   });
 }
