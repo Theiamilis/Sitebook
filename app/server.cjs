@@ -264,6 +264,7 @@ function dayView(day, entryDate) {
       mimeType: video.mime_type,
       sizeBytes: video.size_bytes,
       sortOrder: video.sort_order,
+      available: fsSync.existsSync(path.join(videosDir, video.stored_name)),
       streamUrl: "/api/videos/" + encodeURIComponent(video.id) + "/stream"
     }))
   };
@@ -889,7 +890,15 @@ async function route(req, res) {
     const video = db.prepare("SELECT * FROM videos WHERE id = ?").get(videoStreamMatch[1]);
     if (!video) return fail(res, 404, "Video tidak ditemukan.");
     const filePath = path.join(videosDir, video.stored_name);
-    const file = await fs.stat(filePath);
+    let file;
+    try {
+      file = await fs.stat(filePath);
+    } catch (error) {
+      if (error.code === "ENOENT") {
+        return fail(res, 410, "Berkas video tidak ada di arsip. Unggah ulang berkas aslinya.", "video_file_missing");
+      }
+      throw error;
+    }
     const rangeHeader = req.headers.range;
     let start = 0;
     let end = file.size - 1;
